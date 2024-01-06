@@ -17,7 +17,7 @@ public class UsersController : BaseApiController
     }
 
     [AllowAnonymous]
-    [HttpGet()]
+    [HttpGet("getusers")]
     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
     {
         var users = _context.Users.ToListAsync();
@@ -25,7 +25,7 @@ public class UsersController : BaseApiController
         return await users;
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("getuser/{id}")]
     public async Task<ActionResult<AppUser>> GetUser(int id)
     {
         return await _context.Users.FindAsync(id);
