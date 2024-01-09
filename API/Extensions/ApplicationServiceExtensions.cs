@@ -1,4 +1,5 @@
 using API.Data;
+using API.Helpers;
 using API.Interfaces;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
@@ -16,11 +17,15 @@ public static class ApplicationServiceExtensions
 
         connString = config.GetConnectionString("DefaultConnection");
 
-        services.AddDbContext<DataContext>(opt => opt.UseSqlite(connString));
+        services.AddCors();
 
         services.AddScoped<ITokenService, TokenService>();
 
-        services.AddCors();
+        services.AddDbContext<DataContext>(opt => opt.UseSqlite(connString));
+
+        services.AddScoped<IUserRepository, UserRepository>();
+
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         return services;
     }
